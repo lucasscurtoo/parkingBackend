@@ -21,7 +21,6 @@
 
         public function getVehicleByRegistration($registration){
             $vehicle = $this->getData("select * from vehiculos where matricula =".$registration);
-            echo $vehicle;
             if (!$vehicle) {
                 return $this->response->error_400("Invalid registration");
               }

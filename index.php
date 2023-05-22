@@ -14,41 +14,80 @@ $klein = new \Klein\Klein();
 //vehicles
 
 $klein->respond('GET', '/vehicles', function () use($vehicles) {
-    return print_r($vehicles->getVehicles());
+    $result = $vehicles->getVehicles();
+    $response = json_encode($result);
+    header('Content-Type: application/json');
+    return $response;
 });
 
 $klein->respond('GET', '/vehicles/[i:registration]', function ($request) use($vehicles) {
-    return print_r($vehicles->getVehicleByRegistration(intval($request->registration)));
+    $result = $vehicles->getVehicleByRegistration(intval($request->registration));
+    $response = json_encode($result);
+    header('Content-Type: application/json');
+    return $response;
 });
 
 //parking spots
 
 $klein->respond('GET', '/parkingSpots', function () use($parkingSpot) {
-    return print_r($parkingSpot->getAllPLaces());
+    $result = $parkingSpot->getAllPLaces();
+    $response = json_encode($result);
+    header('Content-Type: application/json');
+    return $response;
 });
 
 $klein->respond('GET', '/parkingSpots/free', function () use($parkingSpot) {
-    return print_r($parkingSpot->getFreePLaces());
+    $result = $parkingSpot->getFreePLaces();
+    $response = json_encode($result);
+    header('Content-Type: application/json');
+    return $response;
+    
 });
 
 $klein->respond('GET', '/parkingSpots/occupied', function () use($parkingSpot) {
-    return print_r($parkingSpot->getOccupiedPlaces());
+    $result = $parkingSpot->getOccupiedPlaces();
+    $response = json_encode($result);
+    header('Content-Type: application/json');
+    return $response;
 });
 
+$klein->respond('POST', '/parkingSpots', function ($request) use($parkingSpot) {
+    $body = $request->body();
+    $result = $parkingSpot->createNewParkingSpot($body);
+    $response = json_encode($result);
+    header('Content-Type: application/json');
+    return $response;
+});
+
+$klein->respond('PUT', '/parkingSpots/[i:id]', function ($request) use($parkingSpot) {
+    $id = intval($request->id);
+    $body = $request->body();
+    $result = $parkingSpot->editParkingSpot($id,$body);
+    $response = json_encode($result);
+    header('Content-Type: application/json');
+    return print_r($response);
+});
+
+$klein->respond('DELETE', '/parkingSpots/[i:id]', function ($request) use($parkingSpot) {
+    $id = intval($request->id);
+    $result = $parkingSpot->deleteParkingSpot($id);
+    $response = json_encode($result);
+    header('Content-Type: application/json');
+    return print_r($response);
+});
+
+$klein->respond('POST', '/parkingSpots/takePlace', function ($request) use($parkingSpot) {
+    $body = intval($request->body());
+    $result = $parkingSpot->takeAPlace($body);
+    $response = json_encode($result);
+    header('Content-Type: application/json');
+    return print_r($response);
+});
 
 
 
 
 
 $klein->dispatch();
-
-//vehicles endpoints
-// $router->map('GET', '/vehicles', print_r($vehicles->getVehicles()));
-// $router->map('GET', '/vehicles/[i:id]', print_r($id));
-
-
-// $router->map('GET', '/vehicles', function() {
-//     return print_r($this->getVehicles());
-// })
 
 ?>

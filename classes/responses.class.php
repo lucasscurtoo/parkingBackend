@@ -24,15 +24,6 @@ class responses{
         return $this->response;
     }
 
-    public function error_200($string = "Incorrect Data"){//parametro opcional
-        $this->response['status'] = 'error';
-        $this->response['result'] = array(
-            "error_id" => "200",
-            "error_message" => $string
-        );
-        return $this->response;
-    }
-
     public function error_204($string = "No Data"){
         $this->response['status'] = 'error';
         $this->response['result'] = array(
@@ -46,7 +37,15 @@ class responses{
         $this->response['status'] = 'error';
         $this->response['result'] = array(
             "error_id" => "400",
-            "error_message" => "Data sended incorrectly"
+            "error_message" => $string
+        );
+        return $this->response;
+    }
+    public function error_404($string = "Not Found"){//parametro opcional
+        $this->response['status'] = 'error';
+        $this->response['result'] = array(
+            "error_id" => "400",
+            "error_message" => $string
         );
         return $this->response;
     }

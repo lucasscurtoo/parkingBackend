@@ -63,7 +63,7 @@ private function convertToUTF8($array) {
     //Esta función es útil para ejecutar consultas SQL que no devuelven
     //ningún dato, como INSERT, UPDATE y DELETE.
     public function insertData($query){
-          //nos devuelve el id de la fila que guardamos
+        //  nos devuelve el id de la fila que guardamos
         $results = $this->connection->query($query);
         $rows =  $this->connection->affected_rows;
         if ($rows >= 1) {
